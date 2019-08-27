@@ -3,7 +3,18 @@ node_js:
   - "stable"
 cache:
   directories:
-    - node_modules  
+    - node_modules
 script:
   - npm run build
   - npm test
+deploy:
+  on:
+    branch: master
+  region: $AWS_DEFAULT_REGION
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  bucket: $AWS_S3_BUCKET
+  skip_cleanup: true
+  local_dir: build
+  cache_control: "max-age=21600"
